@@ -1,51 +1,50 @@
 # RFID Multiple Authentication Lock
-
 ## Overview
+This repository contains code for an access control system using RFID and two-factor authentication. The system reads RFID tags and authenticates users through Authy's OneTouch API. It also controls two red and yellow LEDs to indicate whether access is granted or denied. The code is developed for Arduino and Raspberry Pi platforms.
 
-This Python script provides a two-factor authentication system using Authy OneTouch and RFID cards for the Encation project. The system authenticates users by reading their RFID card and sending a login request to their registered device using the Authy OneTouch API. The script runs on a Raspberry Pi with an RFID reader and uses the RPi.GPIO library to control the output pins.
-
-## Copyright
-
-Copyright (c) 2023 Roberto Salata. All rights reserved.
-
+## Files
+- `final.py`: Python code for the Raspberry Pi to handle RFID tag reading, user authentication, and LED control.
+- `EncationArduinoCode.ino`: Arduino code for controlling the RFID reader and the two LEDs.
+- `reader.ino`: Modified Arduino code that uses an SD card to store and read the list of accepted user RFID tags.
 ## Dependencies
-- Python 3
-- Authy API Python Client
-- RPi.GPIO
-- pyserial
-
-To install the necessary dependencies, run the following:
-```scss
-pip install authy pyserial RPi.GPIO
-```
-
+- Python 3.x
+- Authy API Python client: `pip install authy`
+- RPi.GPIO: `pip install RPi.GPIO`
+- PySerial: `pip install pyserial`
+- Arduino libraries: SPI, MFRC522, and SD
 ## Usage
-1. Create a text file named `user_ids.txt` containing user tags and their corresponding Authy user IDs, separated by a comma. Each user should be on a separate line. Example:
+1. Make sure you have all the necessary dependencies installed.
 	```scss
-	user_tag_1,12345
-	user_tag_2,67890
+	pip install authy RPi.GPIO pyserial
 	```
-2. Update the `authy_api` variable with your Authy API key:
+2. Clone the repository:
 	```scss
-	authy_api = AuthyApiClient('YOUR_AUTHY_API_KEY')
+	git clone https://github.com/robertosalata/RFID-Multiple-Authentication-Lock.git
 	```
-3. Connect the RFID reader to the Raspberry Pi and update the `arduino` variable with the correct serial port:
-	```Arduino
-	arduino = serial.Serial('/dev/ttyACM0', 9600)
-	```
-4. Connect the output pins of the Raspberry Pi to the corresponding devices (e.g., door lock or alarm) and set up the GPIO pins in the script:
+3. Add your Authy API key to `final.py`.
+4. Update the list of accepted user RFID tags in `user_ids.txt` or in the Arduino sketch, depending on the version you choose to use.
+5. Upload the `EncationArduinoCode.ino` or `reader.ino` (if using SD card) Arduino sketch to your Arduino board.
+	- Open the Arduino IDE.
+	- Load the desired sketch file (.ino) from the repository.
+	- Connect your Arduino board to your computer.
+	- Select the correct board and port in the Arduino IDE.
+	- Click the "Upload" button.
+6. Run the Raspberry Pi code:
 	```scss
-	GPIO.setmode(GPIO.BCM)
-	GPIO.setup(17, GPIO.OUT)
-	GPIO.setup(27, GPIO.OUT)
+	python3 final.py
 	```
-5. Run the script on the Raspberry Pi:
-	```scss
-	python encation_auth.py
-	```
-
-The script will read RFID cards and check if they are registered in the `user_ids.txt` file. If the card is registered, it will send a OneTouch login request to the user's device. If the user approves the request within the time limit (default: 10 seconds), the script will activate the connected devices (e.g., unlock a door).
-
+## Hardware
+- Raspberry Pi (with GPIO)
+- Arduino board (e.g., Arduino Uno)
+- MFRC522 RFID reader
+- LEDs (red and yellow)
+- SD card and SD card module (optional, only for `reader.ino`)
 ## License
 
-This project is licensed under the terms of the MIT License. 
+Copyright (c) 2023 Roberto Salata
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
