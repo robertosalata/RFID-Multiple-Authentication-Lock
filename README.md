@@ -14,13 +14,17 @@ Copyright (c) 2023 Roberto Salata. All rights reserved.
 - RPi.GPIO
 - pyserial
 
-To install the necessary dependencies, run:
-	pip install authy pyserial RPi.GPIO
+To install the necessary dependencies, run the following:
+```scss
+pip install authy pyserial RPi.GPIO
+```
 
 ## Usage
 1. Create a text file named `user_ids.txt` containing user tags and their corresponding Authy user IDs, separated by a comma. Each user should be on a separate line. Example:
-		user_tag_1,12345
-		user_tag_2,67890
+	```scss
+	user_tag_1,12345
+	user_tag_2,67890
+	```
 2. Update the `authy_api` variable with your Authy API key:
 	```scss
 	authy_api = AuthyApiClient('YOUR_AUTHY_API_KEY')
@@ -36,10 +40,12 @@ To install the necessary dependencies, run:
 	GPIO.setup(27, GPIO.OUT)
 	```
 5. Run the script on the Raspberry Pi:
-		python encation_auth.py
+	```scss
+	python encation_auth.py
+	```
 
 The script will read RFID cards and check if they are registered in the `user_ids.txt` file. If the card is registered, it will send a OneTouch login request to the user's device. If the user approves the request within the time limit (default: 10 seconds), the script will activate the connected devices (e.g., unlock a door).
 
 ## License
 
-This project is licensed under the terms of the MIT License.
+This project is licensed under the terms of the MIT License. 
