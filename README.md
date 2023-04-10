@@ -41,4 +41,4 @@ The script will read RFID cards and check if they are registered in the `user_id
 
 ## License
 
-This project is licensed under the terms of the MIT License. For more information, see the LICENSE file.
+This project is licensed under the terms of the MIT License.
