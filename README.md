@@ -13,6 +13,7 @@ Copyright (c) 2023 Roberto Salata. All rights reserved.
 - Authy API Python Client
 - RPi.GPIO
 - pyserial
+
 To install the necessary dependencies, run:
 	pip install authy pyserial RPi.GPIO
 
